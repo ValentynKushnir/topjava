@@ -1,7 +1,13 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.javawebinar.topjava.util.ShareableSpringContextHolder;
+import ru.javawebinar.topjava.web.meal.MealRestController;
+import ru.javawebinar.topjava.web.user.AdminRestController;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +18,16 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class UserServlet extends HttpServlet {
     private static final Logger log = getLogger(UserServlet.class);
+
+    private AdminRestController controller;
+
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+//        try (ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring-app.xml")) {
+//            controller = context.getBean(AdminRestController.class);
+//        }
+        controller = ShareableSpringContextHolder.getContext().getBean(AdminRestController.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
