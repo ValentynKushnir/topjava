@@ -3,20 +3,20 @@ package ru.javawebinar.topjava.web.user;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.User;
 
-import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
+import static ru.javawebinar.topjava.web.SecurityUtil.loggedUserId;
 
 @Controller
 public class ProfileRestController extends AbstractUserController {
 
     public User get() {
-        return super.get(authUserId());
+        return super.get(loggedUserId());
     }
 
     public void delete() {
-        super.delete(authUserId());
+        super.delete(loggedUserId());
     }
 
     public void update(User user) {
-        super.update(user, authUserId());
+        super.update(user, loggedUserId());
     }
 }
